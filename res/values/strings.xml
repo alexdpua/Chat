@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Chat</string>
+    <string name="forget_Pass">Forgot your password?</string>
+    <string name="about_App">About Application</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="Enter">Enter</string>
+    <string name="Registration">Registration</string>
+    <string name="aboutDescrp">This application was create by Emchigeshev Alexandr in 2013 year. All rights recerved!</string>
+    <string name="qiut">Exit</string>
+    <string name="nick">Nick</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="passwordConf">Password Conformation</string>
+    <string name="age">Age</string>
+    
+
+</resources>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Registration"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/EmailReg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/darker_gray"
+            android:ems="10"
+            android:hint="@string/Email"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:textColorHint="@android:color/background_light" />
+
+        <EditText
+            android:id="@+id/NickReg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/darker_gray"
+            android:ems="10"
+            android:hint="@string/nick"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:textColorHint="@android:color/background_light" />
+
+        <LinearLayout
+            android:id="@+id/AgeSexLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/AgeReg"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@android:color/darker_gray"
+                android:ems="10"
+                android:hint="@string/age"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:textColorHint="@android:color/background_light" />
+
+            <RadioGroup
+                android:id="@+id/SexRB"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@android:drawable/btn_radio"
+                    android:text="@string/male"
+                    android:textColor="@android:color/background_light" />
+
+                <RadioButton
+                    android:id="@+id/female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@android:drawable/btn_radio"
+                    android:text="@string/female"
+                    android:textColor="@android:color/background_light" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/PasswordReg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@android:color/darker_gray"
+            android:ems="10"
+            android:hint="@string/Password"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:textColorHint="@android:color/background_light" />
+
+        <EditText
+            android:id="@+id/PassConfReg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@android:color/darker_gray"
+            android:ems="10"
+            android:hint="@string/passwordConf"
+            android:imeOptions="actionNext"
+            android:inputType="textPassword"
+            android:textColorHint="@android:color/background_light" />
+
+        <Button
+            android:id="@+id/Reg"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:drawable/btn_default"
+            android:text="@string/Registration"
+            android:layout_marginTop="50dp" />
+    </LinearLayout>
+
+</ScrollView>

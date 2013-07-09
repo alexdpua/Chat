@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/forget_Pass"
+        android:title="@string/forget_Pass"
+        android:icon="@android:drawable/ic_menu_help"/>
+    <item
+        android:id="@+id/aboutApp"
+        android:title="@string/about_App"
+        android:icon="@android:drawable/ic_menu_info_details"/>
+    <item
+        android:id="@+id/quit"
+        android:title="@string/qiut"
+        android:icon="@android:drawable/ic_menu_delete"/>
+
+</menu>

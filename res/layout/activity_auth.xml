@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".AuthActivity" >
+
+    <FrameLayout
+        android:id="@+id/Center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" >
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/ChatLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/Center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/chat" />
+
+    <LinearLayout
+        android:id="@+id/BottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/Center"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:hint="@string/Email"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"/>
+
+        <EditText
+            android:id="@+id/Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/background_light"
+            android:hint="@string/Password"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone" />
+
+        <LinearLayout
+            android:id="@+id/BtnLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/Enter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_default"
+                android:text="@string/Enter" />
+
+            <Button
+                android:id="@+id/Registration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_default"
+                android:text="@string/Registration"
+                android:onClick="onClickRegistration" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
