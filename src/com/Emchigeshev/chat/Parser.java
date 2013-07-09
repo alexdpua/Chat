@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.json.*;
 
+import com.Emchigeshev.chat.Room.Status;
+
 public class Parser {
 	public static void getRooms(String jsonString, List<Room> list) throws ParserException{
 		JSONObject json = new JSONObject();
@@ -13,7 +15,8 @@ public class Parser {
 			for (int i = 0; i < roomArray.length(); i++){
 				JSONObject jsonRoom = (JSONObject) roomArray.get(i);
 				Room r = new Room(jsonRoom.getString("name"));
-				r.getPeopleCount();
+				r.setPeopleCount(jsonRoom.getInt("people_count"));
+				r.setStatus(Status.valueOf(jsonRoom.getString("status")));
 				
 				list.add(r);
 			}
