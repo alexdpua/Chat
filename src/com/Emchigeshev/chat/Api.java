@@ -89,7 +89,7 @@ public class Api {
 
 	private AuthInfo AI;
 	private boolean isAuth = false;
-	private static final String BASE_URL = "http://192.168.1.2:6606/";
+	private static final String BASE_URL = "http://10.2.1.38:6606/";
 
 	public void auth(String email, String pass) throws ApiException {
 		if (isAuth) {

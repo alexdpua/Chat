@@ -3,6 +3,8 @@ package com.Emchigeshev.chat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Emchigeshev.chat.Parser.ParserException;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,49 +24,42 @@ import android.widget.Toast;
 
 public class RoomsActivity extends BaseActivity {
 	private RoomsAdapter mAdapter;
+	private ListView mListView;
 
-	private final static List<Room> sRooms = new ArrayList<Room>();
-	static {
-		sRooms.add(new Room("ќбщий чат").setPeopleCount(9).setStatus(
-				Room.Status.ok));
-		sRooms.add(new Room("„ат два").setPeopleCount(3).setStatus(
-				Room.Status.banned));
-		sRooms.add(new Room("„ат три").setPeopleCount(4).setStatus(
-				Room.Status.inside));
-		sRooms.add(new Room("„ат").setPeopleCount(6).setStatus(Room.Status.ok));
-	}
+	/*
+	 * private final static List<Room> sRooms = new ArrayList<Room>(); static {
+	 * sRooms.add(new Room("ќбщий чат").setPeopleCount(9).setStatus(
+	 * Room.Status.ok)); sRooms.add(new
+	 * Room("„ат два").setPeopleCount(3).setStatus( Room.Status.banned));
+	 * sRooms.add(new Room("„ат три").setPeopleCount(4).setStatus(
+	 * Room.Status.inside)); sRooms.add(new
+	 * Room("„ат").setPeopleCount(6).setStatus(Room.Status.ok)); }
+	 */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_rooms);
-		ListView listView = (ListView) findViewById(R.id.list);
-		
-		final String[] items = new String[] { "One", "Two", "Three", "Four",
-				"Five", "Six" };
-		mAdapter = new RoomsAdapter(this, sRooms);
-		listView.setAdapter(mAdapter);
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View v,
-					int position, long itemId) {
-				Toast.makeText(RoomsActivity.this, items[position],
-						Toast.LENGTH_LONG).show();
-			}
-		});
-		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> adapter, View v,
-					int position, long itemId) {
-				Toast.makeText(RoomsActivity.this,
-						"LongClick " + items[position], Toast.LENGTH_LONG)
-						.show();
-				return true;
-			}
-		});
+		 mListView = (ListView) findViewById(R.id.list);
+		 
+		/* final String[] items = new String[] { "One", "Two", "Three", "Four",
+		 "Five", "Six" }; 
+		 mAdapter = new RoomsAdapter(this, sRooms);
+		 listView.setAdapter(mAdapter); listView.setOnItemClickListener(new
+		 AdapterView.OnItemClickListener() {
+		 
+		 @Override public void onItemClick(AdapterView<?> adapter, View v, int
+		 position, long itemId) { Toast.makeText(RoomsActivity.this,
+		 items[position], Toast.LENGTH_LONG).show(); } });
+		 listView.setOnItemLongClickListener(new
+		 AdapterView.OnItemLongClickListener() {
+		  
+		 @Override public boolean onItemLongClick(AdapterView<?> adapter, View
+		 v, int position, long itemId) { Toast.makeText(RoomsActivity.this,
+		 "LongClick " + items[position], Toast.LENGTH_LONG) .show(); return
+		  true; } });
+		 */
 	}
 
 	@Override
@@ -117,7 +112,12 @@ public class RoomsActivity extends BaseActivity {
 							Room r = new Room(name);
 							r.setPeopleCount(1);
 							r.setStatus(Room.Status.ok);
-							sRooms.add(r);
+							try {
+								mCore.getApi().getRooms().add(r);
+							} catch (ParserException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 							mAdapter.notifyDataSetChanged();
 						}
 					}
@@ -138,8 +138,22 @@ public class RoomsActivity extends BaseActivity {
 
 	@Override
 	protected void onConnectedToService() {
-		// TODO Auto-generated method stub
 		
+		try {
+			mAdapter = new RoomsAdapter(this,mCore.getApi().getRooms());
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mListView.setAdapter(mAdapter);
+
+	}
+
+	@Override
+	public void onBackPressed() {
+		stopSystem();
+		super.onBackPressed();
+		// android.os.Process.killProcess(android.os.Process.myPid());
 	}
 
 }

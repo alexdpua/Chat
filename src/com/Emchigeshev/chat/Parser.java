@@ -9,15 +9,15 @@ import com.Emchigeshev.chat.Room.Status;
 
 public class Parser {
 	public static void getRooms(String jsonString, List<Room> list) throws ParserException{
-		JSONObject json = new JSONObject();
+		
 		try {
+			JSONObject json = new JSONObject(jsonString);
 			JSONArray roomArray = json.getJSONArray("rooms");
 			for (int i = 0; i < roomArray.length(); i++){
 				JSONObject jsonRoom = (JSONObject) roomArray.get(i);
 				Room r = new Room(jsonRoom.getString("name"));
 				r.setPeopleCount(jsonRoom.getInt("people_count"));
 				r.setStatus(Status.valueOf(jsonRoom.getString("status")));
-				
 				list.add(r);
 			}
 		} catch (JSONException e) {

@@ -11,12 +11,13 @@ import android.os.IBinder;
 public abstract class BaseActivity extends Activity {
 	private ServiceConnection mSrvConn;
 	protected ChatService mCore;
+	private Intent mIntent;
 	@Override
 	protected void onCreate(Bundle b) {
 		super.onCreate(b);
-		Intent intent = new Intent();
-		intent.setClass(this, ChatService.class);
-		startService(intent);
+		mIntent = new Intent();
+		mIntent.setClass(this, ChatService.class);
+		startService(mIntent);
 		mSrvConn = new ServiceConnection() {
 			
 			@Override
@@ -27,11 +28,11 @@ public abstract class BaseActivity extends Activity {
 			@Override
 			public void onServiceConnected(ComponentName name, IBinder service) {
 				mCore = ((ChatService.SelfBinder)service).srv;
-				
+				onConnectedToService();
 			}
 		};
 		
-		bindService(intent, mSrvConn, Service.BIND_AUTO_CREATE);
+		bindService(mIntent, mSrvConn, Service.BIND_AUTO_CREATE);
 		}
 	
 	
@@ -42,7 +43,23 @@ public abstract class BaseActivity extends Activity {
 	
 	abstract protected void onConnectedToService();
 
+protected final void stopSystem (){
+	stopService(mIntent);
+	
 }
 
-//github.com
+
+}
+
+/*Save
+ * git add .
+ * git commit -a -m"  "
+ * git push origin master
+ * 
+ * Load
+ * repository git clone
+ * 
+ * git pull origin master
+ */
+
 
