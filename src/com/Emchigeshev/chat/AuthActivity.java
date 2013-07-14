@@ -1,6 +1,7 @@
 package com.Emchigeshev.chat;
 
 import com.Emchigeshev.chat.Api.ApiException;
+import com.Emchigeshev.chat.Api.AuthCallback;
 
 import android.app.Activity;
 import android.app.Service;
@@ -19,11 +20,11 @@ public class AuthActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_auth);
 		findViewById(R.id.Enter).setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				onClickEnter(arg0);		
-				
+				onClickEnter(arg0);
+
 			}
 		});
 
@@ -66,30 +67,39 @@ public class AuthActivity extends BaseActivity {
 	private void quit() {
 		finish();
 	}
-	public void onClickEnter (View view){
-		
-		EditText Email = (EditText)findViewById(R.id.Email);
-		EditText Password = (EditText)findViewById(R.id.Password);
-		try {
-			mCore.getApi().auth(Email.getText().toString(), Password.getText().toString());
-			Intent i = new Intent(this, RoomsActivity.class);
-			startActivity(i);
-			finish();
-		} catch (ApiException e) {
-			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-			
-		}
+
+	public void onClickEnter(View view) {
+
+		EditText Email = (EditText) findViewById(R.id.Email);
+		EditText Password = (EditText) findViewById(R.id.Password);
+
+		mCore.getApi().auth(Email.getText().toString(),
+				Password.getText().toString(), new Api.AuthCallback() {
+
+					@Override
+					public void onAuthCallbackSuccess() {
+						Intent i = new Intent(AuthActivity.this, RoomsActivity.class);
+						startActivity(i);
+						finish();
+
+					}
+
+					@Override
+					public void onAuthCallbackFail(String messege) {
+						Toast.makeText(AuthActivity.this, messege, Toast.LENGTH_LONG)
+								.show();
+
+					}
+				});
+
 	}
 
 	@Override
 	protected void onConnectedToService() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
-	
-	//ServiceConnection mSrvConn = new ServiceConnection()
-	
+
+	// ServiceConnection mSrvConn = new ServiceConnection()
+
 }

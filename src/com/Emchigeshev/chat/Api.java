@@ -16,6 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import com.Emchigeshev.chat.Parser.ParserException;
 
 import android.app.Activity;
+import android.content.res.Resources.Theme;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -89,21 +91,48 @@ public class Api {
 
 	private AuthInfo AI;
 	private boolean isAuth = false;
-	private static final String BASE_URL = "http://10.2.1.38:6606/";
+	private static final String BASE_URL = "http://10.2.1.12:6606/";
+	private final Object mSyncObject = new Object();
+	private final Handler mHandler = new Handler();
 
-	public void auth(String email, String pass) throws ApiException {
-		if (isAuth) {
-			throw new ApiException("This user is already logged in");
-		} else {
-			try {
-				String resp = Api.connect(BASE_URL + "auth?email=" + email
-						+ "&pass=" + pass);
-				AI = Parser.auth(resp);
-				isAuth = true;
-			} catch (Exception e) {
-				throw new ApiException(e);
+	public void auth(final String email, final String pass,
+			final AuthCallback callback) {
+		synchronized (mSyncObject) {
+			if (isAuth) {
+				callback.onAuthCallbackFail("Already Authed");
 			}
 		}
+		Thread thread = new Thread("AuthThread") {
+			@Override
+			public void run() {
+				try {
+					String resp = Api.connect(BASE_URL + "auth?email=" + email
+							+ "&pass=" + pass);
+					AI = Parser.auth(resp);
+					isAuth = true;
+					mHandler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							callback.onAuthCallbackSuccess();
+
+						}
+					});
+
+				} catch (final Exception e) {
+					mHandler.post(new Runnable() {
+
+						@Override
+						public void run() {
+							callback.onAuthCallbackFail(e.getMessage());
+
+						}
+					});
+				}
+			}
+		};
+		thread.start();
+
 	}
 
 	public void reg(Person p) {
@@ -127,6 +156,12 @@ public class Api {
 			super(string);
 		}
 
+	}
+
+	public interface AuthCallback {
+		public void onAuthCallbackSuccess();
+
+		public void onAuthCallbackFail(String messege);
 	}
 
 }
