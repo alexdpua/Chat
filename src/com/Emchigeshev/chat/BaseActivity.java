@@ -60,6 +60,11 @@ protected final void stopSystem (){
  * repository git clone
  * 
  * git pull origin master
+ * 
+ * отправка сообщений
+ * http://10.2.1.12:6606/send_msg?token=1&receiver=1&text=hello
+ * http://10.2.1.12:6606/check_msg?token=1&room_id=1&msg_id
+ * 
  */
 
 
