@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,25 +42,34 @@ public class RoomsActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_rooms);
-		 mListView = (ListView) findViewById(R.id.list);
-		 
-		/* final String[] items = new String[] { "One", "Two", "Three", "Four",
-		 "Five", "Six" }; 
-		 mAdapter = new RoomsAdapter(this, sRooms);
-		 listView.setAdapter(mAdapter); listView.setOnItemClickListener(new
-		 AdapterView.OnItemClickListener() {
-		 
-		 @Override public void onItemClick(AdapterView<?> adapter, View v, int
-		 position, long itemId) { Toast.makeText(RoomsActivity.this,
-		 items[position], Toast.LENGTH_LONG).show(); } });
-		 listView.setOnItemLongClickListener(new
-		 AdapterView.OnItemLongClickListener() {
-		  
-		 @Override public boolean onItemLongClick(AdapterView<?> adapter, View
-		 v, int position, long itemId) { Toast.makeText(RoomsActivity.this,
-		 "LongClick " + items[position], Toast.LENGTH_LONG) .show(); return
-		  true; } });
+		mListView = (ListView) findViewById(R.id.list);
+
+		/*
+		 * final String[] items = new String[] { "One", "Two", "Three", "Four",
+		 * "Five", "Six" }; mAdapter = new RoomsAdapter(this, sRooms);
+		 * listView.setAdapter(mAdapter);
 		 */
+		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View v,
+					int position, long itemId) {
+				Intent i = new Intent (RoomsActivity.this, ChatActivity.class);
+				startActivity(i);
+			}
+		});
+		/*listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> adapter, View v,
+					int position, long itemId) {
+				Toast.makeText(RoomsActivity.this,
+						"LongClick " + items[position], Toast.LENGTH_LONG)
+						.show();
+				return true;
+			}
+		});*/
+
 	}
 
 	@Override
@@ -138,9 +148,9 @@ public class RoomsActivity extends BaseActivity {
 
 	@Override
 	protected void onConnectedToService() {
-		
+
 		try {
-			mAdapter = new RoomsAdapter(this,mCore.getApi().getRooms());
+			mAdapter = new RoomsAdapter(this, mCore.getApi().getRooms());
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

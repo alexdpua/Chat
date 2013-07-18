@@ -91,7 +91,7 @@ public class Api {
 
 	private AuthInfo AI;
 	private boolean isAuth = false;
-	private static final String BASE_URL = "http://10.2.1.12:6606/";
+	private static final String BASE_URL = "http://192.168.1.5:6607/";
 	private final Object mSyncObject = new Object();
 	private final Handler mHandler = new Handler();
 
@@ -138,11 +138,44 @@ public class Api {
 	public void reg(Person p) {
 
 	}
-
+	
 	public List<Room> getRooms() throws ParserException {
-		List<Room> list = new ArrayList<Room>();
-		String jsonResp = connect(BASE_URL + "rooms?token=" + AI.token);
-		Parser.getRooms(jsonResp, list);
+		final List<Room> list = new ArrayList<Room>();
+
+		Thread thread = new Thread("RoomsThread") {
+			@Override
+			public void run() {
+
+				final String jsonResp = connect(BASE_URL + "rooms?token="
+						+ AI.token);
+
+				mHandler.post(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							Parser.getRooms(jsonResp, list);
+		
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		};
+		thread.start();
+		// List<Room> list = new ArrayList<Room>();
+		// String jsonResp = connect(BASE_URL + "rooms?token=" + AI.token);
+		// Parser.getRooms(jsonResp, list);
+		return list;
+	}
+
+	public List<Message> getMessage() throws ParserException {
+		List<Message> list = new ArrayList<Message>();
+		String jsonResp = connect(BASE_URL + "check_msg?token=" + AI.token
+				+ "&room_id=1&");
+		Parser.getMessage(jsonResp, list);
 		return list;
 	}
 

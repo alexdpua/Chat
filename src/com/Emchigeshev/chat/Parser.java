@@ -8,12 +8,13 @@ import org.json.*;
 import com.Emchigeshev.chat.Room.Status;
 
 public class Parser {
-	public static void getRooms(String jsonString, List<Room> list) throws ParserException{
-		
+	public static void getRooms(String jsonString, List<Room> list)
+			throws ParserException {
+
 		try {
 			JSONObject json = new JSONObject(jsonString);
 			JSONArray roomArray = json.getJSONArray("rooms");
-			for (int i = 0; i < roomArray.length(); i++){
+			for (int i = 0; i < roomArray.length(); i++) {
 				JSONObject jsonRoom = (JSONObject) roomArray.get(i);
 				Room r = new Room(jsonRoom.getString("name"));
 				r.setPeopleCount(jsonRoom.getInt("people_count"));
@@ -24,13 +25,30 @@ public class Parser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 	}
-	
-	public static AuthInfo auth(String jsonString) throws IllegalArgumentException {
+
+	public static void getMessage(String jsonString, List<Message> list) {
+		try {
+			JSONObject json = new JSONObject(jsonString);
+			JSONArray messageArray = json.getJSONArray("messages");
+			for (int i = 0; i < messageArray.length(); i++) {
+				JSONObject jsonMessage = (JSONObject) messageArray.get(i);
+				Message m = new Message(jsonMessage.getString("author_id"),
+						jsonMessage.getString("room_id"),
+						jsonMessage.getString("text"));
+				m.setReceiver(jsonMessage.getString("room_id"));
+				m.setSender(jsonMessage.getString("author_id"));
+				m.setText(jsonMessage.getString("text"));
+				list.add(m);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static AuthInfo auth(String jsonString)
+			throws IllegalArgumentException {
 
 		try {
 			JSONObject json = new JSONObject(jsonString);
@@ -44,19 +62,22 @@ public class Parser {
 		} catch (JSONException e) {
 			throw new IllegalArgumentException(e);
 		}
-		
+
 	}
-	static class ParserException extends Exception{
+
+	static class ParserException extends Exception {
 		public final int errCode;
-				
+
 		public ParserException(int ErrCode) {
-		this.errCode = ErrCode;
+			this.errCode = ErrCode;
 		}
-		public ParserException(String message){
+
+		public ParserException(String message) {
 			super(message);
 			errCode = -1;
 		}
-		public ParserException (Throwable t){
+
+		public ParserException(Throwable t) {
 			super(t);
 			errCode = -1;
 		}
