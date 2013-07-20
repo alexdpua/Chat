@@ -65,6 +65,35 @@ protected final void stopSystem (){
  * http://10.2.1.12:6606/send_msg?token=1&receiver=1&text=hello
  * http://10.2.1.12:6606/check_msg?token=1&room_id=1&msg_id
  * 
+ * 
+ *  SQLite
+ *  
+ * "SELECT email,age FROM Person WHERE nick =\"tv"\";
+ * INSERT INTO Person (key, email, password, nick, age, sex) VALUES (1, "i@i.ua","1234","killer",32,"male");
+ * UPDATE
+ * DELETE * 
+ *
+ * CREATE TABLE Messages (id INT PRIMARY KEY, time LONG, text_msg TEXT, sender_id INT, room_id INT);
+ * INSERT INTO Messages (time, text_msg,sender_id,room_id) VALUES (138756120,"Hello 2", 2, 1);
+ * SELECT * FROM Messages;
+ * SELECT * FROM Messages WHERE room_id = 1;
+ * SELECT * FROM Messages WHERE text_msg LIKE "%Hello%";
+ * SELECT * FROM Messages WHERE text_msg LIKE "%o%" AND room_id = 1;
+ * SELECT * FROM Messages WHERE (text_msg LIKE "%o%" AND room_id = 1) OR sender_id = 2;
+ * UPDATE Messages SET text_msg = "spam" WHERE sender_id = 3;
+ * DELETE FROM Messages WHERE room_id = 2;
+ * 
+ * HomeWork
+ * создать базу данных
+ * таблица Persons
+ * id INT, email VARCHAR (255), pass VARCHAR (255),nick VARCHAR(255), sex INT, age INT
+ * 
+ * таблица Rooms
+ * id INT, name VARCHAR (255)
+ * 
+ * таблица PersonsInRoomы
+ * id INT, person_id INT, room_id INT
+ 
  */
 
 
