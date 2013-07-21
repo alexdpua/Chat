@@ -13,9 +13,8 @@ public class RoomsAdapter extends BaseAdapter {
 	private final Context mContext;
 	private final List<Room> mList;
 
-	public RoomsAdapter(Context context, List<Room> list) {
+	public RoomsAdapter(Context context) {
 		this.mContext = context;
-		this.mList = list;
 	}
 
 	@Override

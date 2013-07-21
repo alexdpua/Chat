@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 public abstract class BaseActivity extends Activity {
 	private ServiceConnection mSrvConn;
@@ -83,16 +84,19 @@ protected final void stopSystem (){
  * UPDATE Messages SET text_msg = "spam" WHERE sender_id = 3;
  * DELETE FROM Messages WHERE room_id = 2;
  * 
- * HomeWork
- * создать базу данных
- * таблица Persons
- * id INT, email VARCHAR (255), pass VARCHAR (255),nick VARCHAR(255), sex INT, age INT
+
  * 
- * таблица Rooms
- * id INT, name VARCHAR (255)
+ * private static President p;
+ * public static President get(){
+ * if(p == null){
+ * synchronized (President.class){
+ * if (p == null){
+ * p = new President;
+ * }}
+ * return p;}
  * 
- * таблица PersonsInRoomы
- * id INT, person_id INT, room_id INT
+ * 
+ * 
  
  */
 
