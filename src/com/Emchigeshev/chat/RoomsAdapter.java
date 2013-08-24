@@ -2,6 +2,7 @@ package com.Emchigeshev.chat;
 
 import java.util.List;
 import android.content.Context;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,21 +13,27 @@ import android.widget.TextView;
 public class RoomsAdapter extends BaseAdapter {
 	private final Context mContext;
 	private final List<Room> mList;
-
-	public RoomsAdapter(Context context) {
+	SQLiteOpenHelper sqldb;
+	ChatDB cdb;
+	
+	public RoomsAdapter(Context context, List<Room> list) {
 		this.mContext = context;
+		this.mList = list;
+		
 	}
 
 	@Override
 	public int getCount() {
-
-		return mList.size();
+		
+		return cdb.fetchRooms().getCount();
+				//mList.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		
-		return mList.get(arg0);
+		return cdb.fetchRooms().getInt(arg0);
+				//mList.get(arg0);
 	}
 
 	@Override
@@ -37,6 +44,7 @@ public class RoomsAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View maskedView, ViewGroup parent) {
+		
 		Room item = mList.get(position);
 		if (maskedView == null) {
 			maskedView = LayoutInflater.from(mContext).inflate(R.layout.rooms_row, null);
@@ -64,13 +72,10 @@ public class RoomsAdapter extends BaseAdapter {
 			break;
 		}
 		
-
 		if (position % 2 == 1){
 			maskedView.setBackgroundColor(0x66999999);
 		}
 		else maskedView.setBackgroundColor(0x00555555);
-		
-		
 		
 		return maskedView;
 	}

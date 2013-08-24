@@ -11,8 +11,8 @@ public class ChatDB extends SQLiteOpenHelper {
 	public static final String FIELD_NAME = "name";
 
 	public ChatDB(Context context) {
-		super(context, "chat", null, 1);
-		// TODO Auto-generated constructor stub
+		super(context, "chat.db", null, 1);
+
 	}
 
 	@Override
@@ -59,8 +59,31 @@ public class ChatDB extends SQLiteOpenHelper {
 	}
 
 	public Cursor fetchRooms() {
+		return getReadableDatabase().rawQuery(
+				"SELECT " + FIELD_ID + ", " + FIELD_NAME + " FROM Rooms;",
+				new String[0]);
+	}
+	
+	public void Rooms(){
+		int i = fetchRooms().getCount();
+		Log.i("coutn is " + i, "opa-opa");
+		while (fetchRooms().moveToNext()) {
+			int id = fetchRooms().getInt(0);
+			String text = fetchRooms().getString(1);
+			Log.i("Rooms - " + "id " + id, ", name " + text);
+		}
+	}
 
-		return getReadableDatabase().rawQuery("SELECT " + FIELD_ID + ", " + FIELD_NAME + " FROM Rooms;",new String[0]);
+	public void selectRooms() {
+		Cursor cursor = getReadableDatabase().query("Rooms",
+				new String[] { ChatDB.FIELD_ID, ChatDB.FIELD_NAME }, null,
+				null, null, null, null);
+		while (cursor.moveToNext()) {
+			int id = cursor.getInt(0);
+			String text = cursor.getString(1);
+			Log.e("Rooms - " + "id " + id, ", name " + text);
+		}
+		cursor.close();
 	}
 
 }

@@ -96,7 +96,10 @@ protected final void stopSystem (){
  * return p;}
  * 
  * 
- * 
+ * C:\Program Files\adt...\adt...\sdk\platform-tools> adb.exe
+ * pull
+ * data/data/com.Emchigeshev.database/databases/database.db
+ * C:\SQLite\db
  
  */
 

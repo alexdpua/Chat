@@ -12,15 +12,10 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import com.Emchigeshev.chat.Parser.ParserException;
-
-import android.app.Activity;
-import android.content.res.Resources.Theme;
 import android.os.Handler;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.Toast;
+
 
 public class Api {
 	// класс выполняет запросы к серверу
@@ -91,7 +86,7 @@ public class Api {
 
 	private AuthInfo AI;
 	private boolean isAuth = false;
-	private static final String BASE_URL = "http://192.168.1.5:6607/";
+	private static final String BASE_URL = "http://192.168.1.5:6606/";
 	private final Object mSyncObject = new Object();
 	private final Handler mHandler = new Handler();
 
