@@ -28,8 +28,8 @@ public class ChatService extends Service {
 		super.onCreate();
 		mChatDB = new ChatDB(ChatService.this);
 		//mChatDB.selectAll();
-		//mChatDB.selectRooms();
-		mChatDB.Rooms();
+		mChatDB.selectRooms();
+		//mChatDB.Rooms();
 		mApi = new Api();
 	}
 

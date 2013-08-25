@@ -100,7 +100,35 @@ protected final void stopSystem (){
  * pull
  * data/data/com.Emchigeshev.database/databases/database.db
  * C:\SQLite\db
- 
+ * 
+ * SELECT COUNT(id) FROM Rooms WHERE stat = 0;
+ * SELECT SUM(peopleCount) FROM Rooms WHERE ...;
+ *        MIN
+ *        MAX
+ *        AVG - среднее количество
+ * 
+ * SELECT name FROM Rooms WHERE id = (
+ * SELECT room_id FROM Messages WHERE sender_id = (
+ * SELECT id FROM Person WHERE sex = 1 AND age > 28));
+ * 
+ * SELECT `Rooms`.`name` FROM Rooms, Messages, Person WHERE `Rooms`.`id`=`Messages`.`room_id` AND
+ * `Messages`.`sender_id` = `Person`.`id` AND `Person`.`sex` = 1 AND `Person`.`age` > 28;
+ * 
+ * SELECT nick FROM Person WHERE id = (
+ * SELECT sender_id FROM Messages WHERE COUNT(sender_id) > 2)
+ * AND (SELECT m_id RoomsToMessages COUNT(r_id)>2);
+ * 
+ * SELECT id FROM Messages ORDER BY id ASC; - сортировка по возрастанию
+ * SELECT id FROM Messages ORDER BY id DESC; - сортировка по убыванию
+ * 
+ * SELECT id FROM Messages ORDER BY time DESC LIMIT 3; - устанавливаем лимит вывода 3
+ * SELECT id FROM Messages ORDER BY time DESC LIMIT 2,3; - выводит 3, 4 элементы
+ * 
+ * SELECT sender_id FROM Messages GROUP BY (sender_id); - убирает все повторяющиеся значения отправителя и сортирует по умолчанию по-возрастанию
+ * 
+ * ALTER TABLE Person ADD nickk VARCHAR (255) ; - добавляет колонку nickk в таблицу Person
+ * ALTER TABLE Person DROP COLUMN nickk; - удаляет колонку
+ * 
  */
 
 
