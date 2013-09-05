@@ -2,15 +2,19 @@
 
     <item
         android:id="@+id/forget_Pass"
-        android:title="@string/forget_Pass"
-        android:icon="@android:drawable/ic_menu_help"/>
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="@string/forget_Pass"/>
     <item
         android:id="@+id/aboutApp"
-        android:title="@string/about_App"
-        android:icon="@android:drawable/ic_menu_info_details"/>
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/about_App"/>
     <item
         android:id="@+id/quit"
-        android:title="@string/qiut"
-        android:icon="@android:drawable/ic_menu_delete"/>
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/qiut"/>
+    <item
+        android:id="@+id/setting"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Setting"/>
 
 </menu>

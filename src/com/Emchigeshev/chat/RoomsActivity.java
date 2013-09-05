@@ -1,12 +1,18 @@
 package com.Emchigeshev.chat;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.Emchigeshev.chat.Parser.ParserException;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +28,8 @@ public class RoomsActivity extends BaseActivity {
 	private ListView mListView;
 
 	/*
-	 * private final static List<Room> sRooms = new ArrayList<Room>(); static {
+	 * private final static List<Room> sRooms = new ArrayList<Room>(); 
+	 * static {
 	 * sRooms.add(new Room("ќбщий чат").setPeopleCount(9).setStatus(
 	 * Room.Status.ok)); sRooms.add(new
 	 * Room("„ат два").setPeopleCount(3).setStatus( Room.Status.banned));
@@ -37,12 +44,6 @@ public class RoomsActivity extends BaseActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_rooms);
 		mListView = (ListView) findViewById(R.id.list);
-
-		/*
-		 * final String[] items = new String[] { "One", "Two", "Three", "Four",
-		 * "Five", "Six" }; mAdapter = new RoomsAdapter(this, sRooms);
-		 * listView.setAdapter(mAdapter);
-		 */
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -113,16 +114,15 @@ public class RoomsActivity extends BaseActivity {
 									"Fill the field desk", Toast.LENGTH_SHORT)
 									.show();
 						} else {
+							
+							mCore.getChatDB().addRoom(name);
+							/*							
 							Room r = new Room(name);
 							r.setPeopleCount(1);
 							r.setStatus(Room.Status.ok);
-							try {
-								mCore.getApi().getRooms().add(r);
-							} catch (ParserException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							mAdapter.notifyDataSetChanged();
+							mCore.getChatDB().selectRooms().add(r);
+							*/
+							
 						}
 					}
 				});
@@ -142,13 +142,17 @@ public class RoomsActivity extends BaseActivity {
 
 	@Override
 	protected void onConnectedToService() {
-
+		mAdapter = new RoomsAdapter(this, mCore.getChatDB().selectRooms());
+		
+		/*
 		try {
 			mAdapter = new RoomsAdapter(this, mCore.getApi().getRooms());
 		} catch (ParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		mAdapter.notifyDataSetChanged();
 		mListView.setAdapter(mAdapter);
 
 	}

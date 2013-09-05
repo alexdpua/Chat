@@ -1,5 +1,8 @@
 package com.Emchigeshev.chat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -41,6 +44,12 @@ public class ChatDB extends SQLiteOpenHelper {
 				+ ","
 				+ sender_id + "," + room_id + ");");
 	}
+	
+	public void addRoom(String name){
+		SQLiteDatabase db = getWritableDatabase();
+		String insert = "INSERT INTO Rooms (name) VALUES ('" + name + "')";
+		db.execSQL(insert);
+	}
 
 	public void selectAll() {
 		Cursor c = getReadableDatabase().rawQuery(
@@ -63,27 +72,20 @@ public class ChatDB extends SQLiteOpenHelper {
 				"SELECT " + FIELD_ID + ", " + FIELD_NAME + " FROM Rooms;",
 				new String[0]);
 	}
-	
-	public void Rooms(){
-		int i = fetchRooms().getCount();
-		Log.i("coutn is " + i, "opa-opa");
-		while (fetchRooms().moveToNext()) {
-			int id = fetchRooms().getInt(0);
-			String text = fetchRooms().getString(1);
-			Log.i("Rooms - " + "id " + id, ", name " + text);
-		}
-	}
 
-	public void selectRooms() {
+	public List<Room> selectRooms() {
+		final List<Room> list = new ArrayList<Room>();
 		Cursor cursor = getReadableDatabase().query("Rooms",
 				new String[] { ChatDB.FIELD_ID, ChatDB.FIELD_NAME }, null,
 				null, null, null, null);
 		while (cursor.moveToNext()) {
 			int id = cursor.getInt(0);
 			String text = cursor.getString(1);
-			Log.e("Rooms - " + "id " + id, ", name " + text);
+			list.add(new Room(text).setPeopleCount(id + 1).setStatus(
+					Room.Status.ok));
 		}
 		cursor.close();
+		return list;
 	}
 
 }

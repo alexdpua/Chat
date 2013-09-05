@@ -1,33 +1,29 @@
 package com.Emchigeshev.chat;
 
-import com.Emchigeshev.chat.Api.ApiException;
-import com.Emchigeshev.chat.Api.AuthCallback;
-
-import android.app.Activity;
-import android.app.Service;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 
-public class AuthActivity extends BaseActivity {	
-	
+public class AuthActivity extends BaseActivity {
+	private SharedPreferences SharedPref;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		SharedPref = getSharedPreferences("main", 0);
 		setContentView(R.layout.activity_auth);
 		findViewById(R.id.Enter).setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 				onClickEnter(arg0);
-
 			}
 		});
 
@@ -49,26 +45,62 @@ public class AuthActivity extends BaseActivity {
 					Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.aboutApp:
-			Intent i = new Intent(this, menu.class);
-			startActivity(i);
-			// AlertDialog ad = new AlertDialog.Builder(this).
-
+			showDialog(1);
 			return true;
 		case R.id.quit:
 			new Handler().postDelayed(new Runnable() {
 
 				@Override
 				public void run() {
-					quit();
+					finish();
 				}
 			}, 2000);
+
+		case R.id.setting:
+			Intent i = new Intent(getBaseContext(), PrefDialog.class);
+			startActivity(i);			
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id) {
+		if (id == 1){
+			AlertDialog.Builder ad = new AlertDialog.Builder(this);
+			ad.setTitle("About Application");
+			ad.setIcon(R.drawable.logo);
+			ad.setMessage("This application was create by Emchigeshev Alexandr in 2013 year."
+					+ " All rights recerved!");
+			ad.setNeutralButton("OK", null);
+			return ad.create();
+		}
+		if (id == 2) {
+			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+			dialog.setTitle("Exit");
+			dialog.setMessage("Are you sure?");
+			dialog.setPositiveButton("Yes",
+					new DialogInterface.OnClickListener() {
 
-	private void quit() {
-		finish();
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							finish();
+						}
+					});
+			dialog.setNegativeButton("No", null);
+			return dialog.create();
+		}
+		else
+		return super.onCreateDialog(id);
+	}
+	@Override
+	public void onBackPressed() {
+		if (SharedPref.getBoolean("EXIT", false)) {
+			super.onBackPressed();
+		} else
+			showDialog(2);
 	}
 
 	public void onClickEnter(View view) {
@@ -81,7 +113,8 @@ public class AuthActivity extends BaseActivity {
 
 					@Override
 					public void onAuthCallbackSuccess() {
-						Intent i = new Intent(AuthActivity.this, RoomsActivity.class);
+						Intent i = new Intent(AuthActivity.this,
+								RoomsActivity.class);
 						startActivity(i);
 						finish();
 
@@ -89,8 +122,8 @@ public class AuthActivity extends BaseActivity {
 
 					@Override
 					public void onAuthCallbackFail(String messege) {
-						Toast.makeText(AuthActivity.this, messege, Toast.LENGTH_LONG)
-								.show();
+						Toast.makeText(AuthActivity.this, messege,
+								Toast.LENGTH_LONG).show();
 
 					}
 				});

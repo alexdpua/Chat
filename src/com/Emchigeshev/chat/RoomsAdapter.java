@@ -13,8 +13,6 @@ import android.widget.TextView;
 public class RoomsAdapter extends BaseAdapter {
 	private final Context mContext;
 	private final List<Room> mList;
-	SQLiteOpenHelper sqldb;
-	ChatDB cdb;
 	
 	public RoomsAdapter(Context context, List<Room> list) {
 		this.mContext = context;
@@ -25,15 +23,13 @@ public class RoomsAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		
-		return cdb.fetchRooms().getCount();
-				//mList.size();
+		return mList.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
 		
-		return cdb.fetchRooms().getInt(arg0);
-				//mList.get(arg0);
+		return mList.get(arg0);
 	}
 
 	@Override
@@ -43,8 +39,7 @@ public class RoomsAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View maskedView, ViewGroup parent) {
-		
+	public View getView(int position, View maskedView, ViewGroup parent) {		
 		Room item = mList.get(position);
 		if (maskedView == null) {
 			maskedView = LayoutInflater.from(mContext).inflate(R.layout.rooms_row, null);
